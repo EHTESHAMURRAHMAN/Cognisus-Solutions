@@ -643,22 +643,74 @@
                         <p>Fill the form and we'll contact you within one business day to schedule a short audit
                             call.</p>
                     </div>
-
-                    <div class="contact__form">
-                        <form id="contact-form" onsubmit="submitContact(event)">
-                            <div class="row g-3">
+                    <!-- <div class="col-lg-7">
+                        <form id="contact-form">
+                            <div class="row">
                                 <div class="col-md-6">
-                                    <input type="text" id="name" class="contact-form" placeholder="Full name" required>
+                                    <div class="form-group">
+                                        <input type="text" name="User_name" class="contact-form" placeholder="Your Name"
+                                            required>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="tel" id="phone" class="contact-form" placeholder="Phone / WhatsApp"
+                                    <div class="form-group">
+                                        <input type="email" name="User_email" class="contact-form"
+                                            placeholder="Email Address" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="User_phone" class="contact-form"
+                                            placeholder="Mobile No" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="contact-form">
+                                        <select class="form-select" name="User_services" required>
+                                            <option value="">Choose Service</option>
+                                            <option value="Room Wallpapers">Room Wallpapers</option>
+                                            <option value="Wall Sheets">Wall Sheets</option>
+                                            <option value="Wall Painting">Wall Painting</option>
+                                            <option value="Interior Designing">Interior Designing</option>
+                                            <option value="PVC Panels">PVC Panels</option>
+                                            <option value="Outdoor Designs">Outdoor Designs</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="message" class="contact-form" placeholder="Type Message" rows="4"
+                                    required></textarea>
+                            </div>
+                            <button type="submit" class="theme-btn">
+                                Send
+                                Message <i class="far fa-paper-plane"></i>
+                            </button>
+                            <span id="successMessage"
+                                style="display: none; margin-left: 15px; color: green; font-size: 16px; font-weight: bold;">Message
+                                sent
+                                successfully! </span>
+
+                        </form>
+
+                    </div> -->
+                    <div class="contact__form">
+                        <form id="contact-form">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <input type="text" name="User_name" class="contact-form" placeholder="Full name"
+                                        required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="tel" name="User_phone" class="contact-form"
+                                        placeholder="Phone / WhatsApp" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="email" name="User_email" class="contact-form" placeholder="Email"
                                         required>
                                 </div>
                                 <div class="col-md-12">
-                                    <input type="email" id="cemail" class="contact-form" placeholder="Email" required>
-                                </div>
-                                <div class="col-md-12">
-                                    <select id="service" class="contact-form" required>
+                                    <select name="User_services" class="contact-form" required>
                                         <option value="">Service interested in</option>
                                         <option>Website + Landing Page</option>
                                         <option>Google My Business</option>
@@ -668,12 +720,17 @@
                                     </select>
                                 </div>
                                 <div class="col-md-12">
-                                    <textarea id="message" class="contact-form" rows="4"
+                                    <textarea name="message" class="contact-form" rows="4"
                                         placeholder="Short message (optional)"></textarea>
                                 </div>
                                 <div class="col-md-12 text-center">
                                     <button class="tg-btn" type="submit">Request Free Audit</button>
+                                    <span id="successMessage"
+                                        style="display: none; margin-left: 15px; color: green; font-size: 16px; font-weight: bold;">Message
+                                        sent
+                                        successfully! </span>
                                 </div>
+
                             </div>
                         </form>
 
@@ -758,6 +815,28 @@
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/aos.js"></script>
     <script src="assets/js/main.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            emailjs.init("9qQHAkK_2rVcjOC-d");
+        })();
+
+        document.getElementById('contact-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            console.log('Selected Service:', formData.get('user_services'));
+
+            emailjs.sendForm('service_qzjleys', 'template_0b2sc88', this)
+                .then(function (response) {
+                    document.getElementById('successMessage').style.display = 'inline';
+                    document.getElementById('successMessage').innerText = "Message sent successfully!";
+                }, function (error) {
+                    document.getElementById('successMessage').style.display = 'inline';
+                    document.getElementById('successMessage').innerText = "Error sending message. Try again!";
+                });
+        });
+    </script>
 
     <script>
         // small helper functions (no backend)
